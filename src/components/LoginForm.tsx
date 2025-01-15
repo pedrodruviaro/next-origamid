@@ -1,5 +1,6 @@
 "use client"
 import React, { FormEvent, useState } from "react"
+import { loginAction } from "../../actions/login"
 
 export default function LoginForm() {
   const [username, setUsername] = useState<string>("")
@@ -8,22 +9,7 @@ export default function LoginForm() {
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault()
 
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    })
-
-    if (!response.ok) {
-      console.log("erro na chamada")
-    }
-
-    window.location.href = "/"
+    loginAction({ username, password })
   }
   return (
     <div>
