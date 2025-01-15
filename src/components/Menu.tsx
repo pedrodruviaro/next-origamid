@@ -38,6 +38,9 @@ export default async function Menu() {
         <li>
           <Link href="/cursos">Cursos</Link>
         </li>
+        <li>
+          <Link href="/acoes2">Ações</Link>
+        </li>
       </ul>
     </>
   )
