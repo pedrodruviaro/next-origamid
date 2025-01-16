@@ -1,6 +1,7 @@
 import { getAula, getCurso, getCursos } from "@/api/cursos"
 import Teste from "@/components/Teste"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
 type PageProps = {
@@ -27,6 +28,10 @@ export default async function SingleAulaPage({ params }: PageProps) {
   const { aula, curso } = await params
 
   const data = await getAula(curso, aula)
+
+  if (data.error) {
+    return notFound()
+  }
 
   return (
     <div>
