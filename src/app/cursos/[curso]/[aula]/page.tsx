@@ -1,5 +1,7 @@
 import { getAula } from "@/api/cursos"
+import Teste from "@/components/Teste"
 import Link from "next/link"
+import { Suspense } from "react"
 
 type PageProps = {
   params: {
@@ -26,6 +28,10 @@ export default async function SingleAulaPage({ params }: PageProps) {
       <p>{data.tempo} min</p>
 
       <Link href={`/cursos/${curso}`}>Voltar ao curso</Link>
+
+      <Suspense>
+        <Teste />
+      </Suspense>
     </div>
   )
 }
