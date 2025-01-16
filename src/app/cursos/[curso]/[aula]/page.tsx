@@ -1,4 +1,4 @@
-import { getAula } from "@/api/cursos"
+import { getAula, getCurso, getCursos } from "@/api/cursos"
 import Teste from "@/components/Teste"
 import Link from "next/link"
 import { Suspense } from "react"
@@ -8,6 +8,19 @@ type PageProps = {
     aula: string
     curso: string
   }
+}
+
+// generate all SSG pages from courses
+export async function generateStaticParams() {
+  const cursos = await getCursos()
+  const aulas = await Promise.all(cursos.map((curso) => getCurso(curso.slug)))
+
+  return aulas
+    .reduce((acc, aula) => acc.concat(aula.aulas), [])
+    .map((aula) => ({
+      aula: aula.slug,
+      curso: cursos.find((c) => c.id === aula.curso_id)?.slug,
+    }))
 }
 
 export default async function SingleAulaPage({ params }: PageProps) {

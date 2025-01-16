@@ -1,10 +1,21 @@
-import { getCurso } from "@/api/cursos"
+import { getCurso, getCursos } from "@/api/cursos"
 import Link from "next/link"
 
 type PageProps = {
   params: {
     curso: string
   }
+}
+
+// generate all SSG pages from courses
+export async function generateStaticParams() {
+  const cursos = await getCursos()
+
+  return cursos.map((curso) => {
+    return {
+      curso: curso.slug,
+    }
+  })
 }
 
 export default async function SingleCursoPage({ params }: PageProps) {
